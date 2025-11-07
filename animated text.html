@@ -1,0 +1,200 @@
+<link rel="icon" 
+     type="image/ico" 
+     href="https://djpiper28.github.io/favicon.ico">
+<ul>
+<title>Animated Text</title>
+<div>
+<p id='copyright'></p>
+<style type="text/css">
+.auto-style1 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+.auto-style2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+.auto-style3 {
+	margin-top: 3px;
+}
+p {
+	font-family: Arial, Helvetica, sans-serif;
+}
+button {
+	font-family: Arial, Helvetica, sans-serif;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+<table>
+<tr>
+	<th><textarea style='auto-style1' id='ben'>S a m p l e</textarea></th>
+	<th><textarea style='auto-style1' id='norm'>black</textarea></th>
+	<th><textarea style='auto-style1' id='hl'>yellow</textarea></th>
+	<th><textarea style='auto-style1' id='fpsbox'>5</textarea></th>
+</tr>
+<tr>
+	<th><p style='auto-style1'>Text to display seperate each letter with a space</p></th>
+	<th><p style='auto-style1'>Normal colour</p></th>
+	<th><p style='auto-style1'>Highlight colour</p></th>
+	<th><p style='auto-style1'>Frames per Second</p></th>
+</tr>
+</table>
+<table><tr>
+	<th><canvas id='gameCanvas' width='900' height='150'style='auto-style1'>unsupported browser</canvas></th>
+	<th><iframe data-aa='535860' src='//ad.a-ads.com/535860?size=336x280' scrolling='no' style='width:336px; height:280px; border:0px; padding:0;overflow:hidden' allowtransparency='true'></iframe><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3519931868243165"
+     data-ad-slot="7809002918"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></th>
+	<th><head>
+<style>
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+</style>
+</head>
+<meta name="djpiper28.github.io" content="animated text">
+<div class="dropdown">
+  <button class="dropbtn">Menu</button>
+  <div class="dropdown-content">
+    <a class="auto-style1" href="https://djpiper28.github.io/index.html">Home</a>
+    <a class="auto-style1" href="https://githubcom/djpiper28">My Github</a>    
+  </div>
+</div>
+
+</th>
+</tr>
+</table>
+<script>
+var FPS = 5;//CHANGE TO SPEED UP OR SLOW DOWN ANIMATION
+var text = "S A M P L E";//TEXT YOU WANT TO ANIAMTE SEPERATE EACH LETTER WITH A SPACE;
+var hl = 'yellow';//CHANGE TO YOUR HIGHLIGHT COLOUR
+var normcolour = 'black';//CHANGE TP YOU COLOUR WHEN TEXT ISN'T HIGHLIGHTED
+var text = text.split(' ');
+var length = text.length;
+var a = 0;
+var az = normcolour;
+console.log(text[0],text,length);
+function drawEverything(){
+	text = document.getElementById('ben').value;
+	hl = document.getElementById('hl').value;
+	normcolour = document.getElementById('norm').value;
+	FPS = document.getElementById('fpsbox').value;
+	text = text.split(' ');
+	length = text.length;
+	draw(0,0,canvas.width, canvas.height,'white');//CHANGE WHITE TO WHAT EVER YOU WANT THE BACKGROUND COLOUR TO BE
+	i = 0;
+	//console.log('frame')
+	while(i<length){
+		if(a==i){
+			az = hl;
+			//console.log('special')
+		} else{
+			az = normcolour;
+			//console.log('normal')
+		}
+		textt(text[i],'24px Hobo STD',5+(24*i),75,az);//CHANGE Hobo STD to your font
+		//console.log(i,text[i],a,az)
+		i = i + 1;
+	}
+	a = a + 1;
+	if(a>length-1){
+		a = 0;
+	}
+}
+function circle(x,y,radius,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.beginPath();
+	canvasContext.arc(x,y,radius,0,tau,true)
+	canvasContext.fill();
+}
+function textt(textt,sizefont,x,y,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.textAlign  = 'centre';
+	canvasContext.font = sizefont;
+	canvasContext.fillText(textt,x,y);
+}
+function draw(x,y,width,height,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.fillRect(x,y,width,height);
+}
+window.onload = function(){
+	console.log("Webpage loaded");
+	canvas = document.getElementById('gameCanvas');
+	canvasContext= canvas.getContext("2d");
+	setInterval(drawEverything,1000/FPS);
+}
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Default ads -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3519931868243165"
+     data-ad-slot="1147744936"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div width='420' height='500'>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-3519931868243165",
+    enable_page_level_ads: true
+  });
+</script>
+</div>

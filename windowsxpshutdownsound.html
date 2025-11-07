@@ -1,0 +1,44 @@
+<html>
+<head>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="app" class="text-center text-black px-20 py-5 bg-grey" width="100%" height="100%">
+<button onclick="alertThineFoe()" class="bg-blue px-20 py-2" id="thing">Change Sound Number from 1</button>
+<h3 class="px-5 py-5">Play Windows XP Sound Board</h3>
+<button onclick="plybtn()" class="bg-green px-20 py-2" id="plybtn">Play</button>
+<p class="py-6 px-5">Windows and its sound effects are not mine.</p>
+</div>
+<script>
+	//MANLY JS
+	var i = 0;
+	var playing = false;
+	var songs = ['windowsxp.mp3','windowsxp2.mp3'];
+	var audio = new Audio('windowsxp.mp3');
+	function alertThineFoe(){
+		document.getElementById("thing").innerHTML="Sound Number "+(i+1);
+		i++;
+		console.log("test");
+	}
+	function plybtn(){
+		changeSong();
+		if(playing){
+			audio.pause();
+			playing=false;
+			document.getElementById("plybtn").outerHTML="<button onclick=\"plybtn()\" class=\"bg-green px-20 py-2\" id=\"plybtn\">Play</button>";
+		} else{
+			audio.play();
+			playing=true;
+			document.getElementById("plybtn").outerHTML="<button onclick=\"plybtn()\" class=\"bg-red px-20 py-2\" id=\"plybtn\">Pause</button>";
+		}
+	}
+	function changeSong(){
+		if(songs[i]==null){
+			i=0;
+		}
+		audio = new Audio(songs[i]);
+	}
+</script>
+</body>
+</html>

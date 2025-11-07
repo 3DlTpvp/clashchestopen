@@ -1,0 +1,288 @@
+<link rel="icon" 
+     type="image/ico" 
+     href="https://djpiper28.github.io/favicon.ico">
+<ul>
+<body>
+<head>
+<title> Pong </title>
+<style type="text/css">
+.auto-style1 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+</style>
+</head>
+
+<h1 class="auto-style1">Pong</h1>
+<h3 class="auto-style1">Is very broken.</h3>
+<table><tr><th><canvas id="gameCanvas" width="800" height="650" class="auto-style1">Update browser please</canvas></th>
+<th><iframe data-aa='535860' src='//ad.a-ads.com/535860?size=336x280' scrolling='no' style='width:336px; height:280px; border:0px; padding:0;overflow:hidden' allowtransparency='true'></iframe><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3519931868243165"
+     data-ad-slot="7809002918"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></th>
+<th><head>
+<style>
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+display:block{
+	font-family: Arial, Helvetica, sans-serif;
+}
+p {
+	font-family: Arial, Helvetica, sans-serif;
+}
+button {
+	font-family: Arial, Helvetica, sans-serif;
+}
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+</style>
+</head>
+<div class="dropdown">
+  <button class="dropbtn">Menu</button>
+  <div class="dropdown-content">
+    <a class="auto-style1" href="https://djpiper28.github.io/index.html">Home</a>
+    <a class="auto-style1" href="https://githubcom/djpiper28">My Github</a>    
+  </div>
+</div>
+<meta name="djpiper28.github.io" content="pong">
+</th>
+</tr></table>
+<span class="auto-style1">
+<script>
+var FPS = 30;
+var bally;
+var score;
+var ballx;
+var ballspeedx = 10;
+var ballspeedy = 10;
+var tau = Math.PI*2;
+var d = 1000;
+var x = 0;
+var i;
+var playery = 275;
+var x;
+var y;
+var paddleTwoY = 325;
+function calculateMousePos(evt) {
+	var rect = canvas.getBoundingClientRect();
+	var root = document.documentElement;
+	var mouseX = evt.clientX - rect.left - root.scrollLeft;
+	var mouseY = evt.clientY - rect.top - root.scrollTop;
+	return {
+		x:mouseX,
+		y:mouseY
+	};
+}
+window.onload = function(){
+	console.log("Webpage loaded");
+	ballreset();
+	score = 0;
+	canvas = document.getElementById('gameCanvas');
+	canvasContext= canvas.getContext("2d");
+	canvas.addEventListener('mousemove',
+	function(evt) {
+				var mousePos = calculateMousePos(evt);
+				playery = mousePos.y - 50;
+		});
+	setInterval(drawEverything,1000/FPS);
+}
+function ballreset(){
+	bally = Math.ceil(Math.floor((Math.random() * 500) + 200)/100)*100;
+	ballx = 600;
+	ballspeedx = 10;
+	ballspeedy = 10;
+}
+function dead(){
+	ballreset();
+	finalscore = score;
+	d = 1
+	score = 0;
+	console.log('dead')
+}
+function drawEverything(){
+	if(playery<=0){
+		playery = 0;
+	} 
+	if(playery>=550){
+		playery = 550;
+	} 
+	draw(0,0,800,650,'#323232');
+	i = 0;
+	liney = 0;
+	while(i<6){
+		draw(397.5,liney,5,75,'white');
+		liney = liney + 110;
+		i = i + 1;
+	}//Lines in the centre
+	circle(ballx,bally,10,'white');//ball
+	if(ballx<100){
+		paddleTwoY = bally;
+	}
+
+	//draw(790,paddleTwoY+50,10,100,'white');
+	draw(790,bally,10,100,'white');
+	text(score,'24px Hobo STD',200,50,'white');
+	draw(0,playery,10,100);
+	circle(ballx,bally,10,'white');
+	ballx = ballx + ballspeedx;
+	bally = bally + ballspeedy;
+	console.log('frame');
+	if(ballx <= 10){
+		console.log(ballx,'is less than 10',bally);
+		i = 0;
+		while(i < 100){
+			i = i + 1;
+			if(Math.round(bally)==Math.round(playery+i)){
+				ballspeedx = -ballspeedx;
+				ballspeedy = -ballspeedy;
+				console.log(ballx,bally,playery);
+				score = score + 1;
+				if(ballspeedy<=0){
+					if(ballspeedy>=-15){
+						ballspeedy = ballspeedy - 5;
+					}
+				} if(ballspeedy>0){
+					if(ballspeedy<=15){
+						ballspeedy = ballspeedy + 5;
+					}
+				} if(bally <= playery+40){
+					if(bally >= playery+60){
+						ballspeedy = 0;
+					}
+				} if(ballx >= 640){
+					if(bally>=paddleTwoY){
+						if(bally<=paddleTwoY-100){
+							if(ballspeedy<=15){
+								ballspeedy = ballspeedy + 5;
+							} 
+							if(ballspeedy>=-15){
+								ballspeedy = ballspeedy - 5;
+							}
+						}
+					}
+				}
+			} console.log(ballx,bally,playery);
+		}
+	}
+	if(bally<=10){
+		ballspeedy=-ballspeedy;
+	} if(bally>=640){
+		ballspeedy = -ballspeedy;
+	} if(ballx<=0){
+		ballspeedx=-ballspeedx;
+		dead();
+	} if(ballx>=790){
+		ballspeedx=-ballspeedx;
+		if(bally>=paddleTwoY){
+			if(bally<=paddleTwoY+100){
+			} 
+		} else{
+			score = score + 1;
+		}
+	} if(d<=100){
+		ballx = 600;
+		bally = 325;
+		d = d+1;
+		ttt= 'You died with a score of:',finalscore;
+		text(ttt, '32px Hobo STD',50,325,'red');
+		text(finalscore, '34px Hobo STD', 450, 325, 'red');
+		console.log('deaded');
+	} if(d==101){
+		ballreset();
+		d = d + 1;
+	} if(bally>=640){
+		bally = 640;
+	} if(bally<=10){
+		bally = 10;
+	} 
+} 
+function circle(x,y,radius,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.beginPath();
+	canvasContext.arc(x,y,radius,0,tau,true)
+	canvasContext.fill();
+}
+function text(textt,sizefont,x,y,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.textAlign  = 'centre';
+	canvasContext.font = sizefont;
+	canvasContext.fillText(textt,x,y);
+}
+function draw(x,y,width,height,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.fillRect(x,y,width,height);
+}
+document.addEventListener('keydown', input);
+document.addEventListener("mousedown", mouse, false);
+function input(){
+	var x = event.keyCode;
+	if(x==32){
+		console.log('space was pressed',x);
+	} if(x==38){
+		console.log('y goes up',x);
+		playery = playery - 50
+	} if(x==40){
+		console.log('y goes down',x);
+		playery = playery + 50
+	}
+}
+function mouse(){
+	console.log('mouse')
+}
+</script>
+</span>
+<div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Default ads -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3519931868243165"
+     data-ad-slot="1147744936"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div width='420' height='500'>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-3519931868243165",
+    enable_page_level_ads: true
+  });
+</script>
+</div>
+</body>

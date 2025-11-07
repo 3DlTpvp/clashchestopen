@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<link rel="icon" 
+     type="image/ico" 
+     href="https://djpiper28.github.io/favicon.ico">
+<ul>
+<html>
+<head>
+	<title>Tank Trouble</title>
+	<style type="text/css">
+.auto-style1 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+</style>
+</head>
+<body>
+<h1 id='title' class="auto-style1">Retarded Tank Trouble Game</h1>
+<p class="auto-style1">Is very retarded and simple</p>
+<table><tr><th><canvas id="gameCanvas" width="800" height="650" class="auto-style1">Update browser please</canvas></th>
+<th><iframe data-aa='535860' src='//ad.a-ads.com/535860?size=336x280' scrolling='no' style='width:336px; height:280px; border:0px; padding:0;overflow:hidden' allowtransparency='true'></iframe><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3519931868243165"
+     data-ad-slot="7809002918"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></th>
+<th><head>
+<meta name="djpiper28.github.io" content="tank trouble">
+<style>
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+p {
+	font-family: Arial, Helvetica, sans-serif;
+}
+button {
+	font-family: Arial, Helvetica, sans-serif;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+</style>
+</head>
+<div class="dropdown">
+  <button class="dropbtn">Menu</button>
+  <div class="dropdown-content">
+    <a class="auto-style1" href="https://djpiper28.github.io/index.html">Home</a>
+    <a class="auto-style1" href="https://githubcom/djpiper28">My Github</a>    
+  </div>
+</div>
+
+</th>
+</tr></table>
+<span class="auto-style1">
+<script>
+var canvas;
+var canvasContexts;
+var pox= 1; //player 1 x
+var poy= 1; //player 1 y
+var ptx= 774; //player 2 x
+var pty= 624; //player 2 y
+var FPS= 30;
+var pos;
+var poss=null;
+var ptss=null;
+var pts;
+var a = 0;
+var b = 0;
+var ax = 10;
+var bx = 10;
+var ay = 10;
+var aa = 0;
+var bb = 0;
+var by = 10;
+var z = 'right';
+var az = 'left';
+var ptsx = 999;
+var ptsy = 999;
+var posy = 999;
+var posx = 999;
+var ascore = 0;
+var bscore = 0;
+window.onload = function(){
+	console.log("Webpage loaded");
+	canvas = document.getElementById('gameCanvas');
+	canvasContext= canvas.getContext("2d");
+	z = 'right';
+	zx = 'left';
+	setInterval(drawEverything,1000/FPS);
+}
+console.log("Code started")
+function dead(character){
+	death(character);
+}
+function death(character){
+	console.log("Called death")
+	if(character=="one"){
+		pox = 0;
+		poy = 0;
+		pts =null;
+		bscore = bscore + 1;
+	}else{
+		ptx = canvas.width - 25;
+		pty = canvas.height - 25;
+		pos = null;
+		ascore = ascore + 1;
+	}
+	var a = 0;
+	var b = 0;
+	var ax = 10;
+	var bx = 10;
+	var ay = 10;
+	var by = 10;
+	var aa = 0;
+	var bb = 0;
+	console.log('killed');
+}
+function draw(x,y,width,height,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.fillRect(x,y,width,height);
+}
+function getPlayerInput(){
+	var x = event.keyCode;
+	if(x==null){
+		x=0
+	} if(x == 39){
+		move('two',20,0);
+		az = 'right'
+	} if(x == 37){
+		move('two',-20,0);
+		az = 'left'
+	} if(x == 38){
+		move('two',0,-20);
+		az = 'up'
+	} if(x == 40){
+		move('two',0,20);
+		az = 'down';
+	} if(x == 68){
+		move('one',20,0);
+		z = 'right'
+	} if(x == 65){
+		move('one',-20,0);
+		z = 'left'
+	} if(x == 87){
+		move('one',0,-20);
+		z = 'up'
+	} if(x == 83){
+		move('one',0,20);
+		z = 'down'
+	} if(x == 32){
+		console.log('shoot player one')
+		shoot('one',25,z);
+	} if(x == 77){
+		console.log('shoot player two')
+		shoot('two',25,az);
+	}
+	//check for movement off canvas
+	if(pox>canvas.width){
+		pox= canvas.width ;
+		console.log('toobig');
+	}
+	if(ptx>canvas.width){
+		ptx= canvas.width ;
+		console.log('toobig');
+	}
+	if(poy>canvas.height){
+		poy= canvas.height ;
+		console.log('toobig');
+	}
+	if(pty>canvas.height){
+		pty= canvas.height ;
+		console.log('toobig');
+	}
+	if(pox<0){
+		pox= 0;
+		console.log('toosmall');
+	}
+	if(ptx<0){
+		ptx= 0;
+		console.log('toosmall');
+	}
+	if(poy<0){
+		poy= 0;
+		console.log('toosmall');
+	}
+	if(pty<0){
+		pty= 0;
+		console.log('toosmall');
+	}
+}
+function circle(x,y,radius,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.beginPath();
+	canvasContext.arc(x,y,radius,0/*start radian*/,Math.PI*2/*end radian*/,true)
+	canvasContext.fill();
+}
+function drawArrow(fromx, fromy, tox, toy){
+                //variables to be used when creating the arrow
+                var headlen = 10;
+
+                var angle = Math.atan2(toy-fromy,tox-fromx);
+			
+                //starting path of the arrow from the start square to the end square and drawing the stroke
+                canvasContext.beginPath();
+                canvasContext.moveTo(fromx, fromy);
+                canvasContext.lineTo(tox, toy);
+                canvasContext.strokeStyle = "white";
+                canvasContext.lineWidth = 22;
+                canvasContext.stroke();
+
+                //starting a new path from the head of the arrow to one of the sides of the point
+                canvasContext.beginPath();
+                canvasContext.moveTo(tox, toy);
+                canvasContext.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
+
+                //path from the side point of the arrow, to the other side point
+                canvasContext.lineTo(tox-headlen*Math.cos(angle+Math.PI/7),toy-headlen*Math.sin(angle+Math.PI/7));
+
+                //path from the side point back to the tip of the arrow, and then again to the opposite side point
+                canvasContext.lineTo(tox, toy);
+                canvasContext.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
+
+                //draws the paths created above
+                canvasContext.strokeStyle = "white";
+                canvasContext.lineWidth = 22;
+                canvasContext.stroke();
+                canvasContext.fillStyle = "white";
+                canvasContext.fill();
+}
+function text(textt,sizefont,x,y,colour){
+	canvasContext.fillStyle = colour;
+	canvasContext.textAlign  = 'centre';
+	canvasContext.font = sizefont;
+	canvasContext.fillText(textt,x,y);
+}
+document.addEventListener('keydown', getPlayerInput);
+document.addEventListener('mousemove', playerThree);
+function playerThree(){
+	
+}
+function drawEverything(){
+	draw(0,0,canvas.width,canvas.height,'#323232');//fills canvas from 0,0 to the canvas's height
+	console.log("drawn everything");
+	//draws players
+	draw(pox,poy,25,25,'red');
+	draw(ptx,pty,25,25,'green');
+	text(bscore,'20px Hobo STD', 180, 50, 'green');
+	text(ascore,'20px Hobo STD', 580, 50, 'red');
+	if(z/*player one facing*/=='right'){
+		aox = pox + 50;
+		aoy = poy + 25;
+	} if(z/*player one facing*/=='left'){
+		aox = pox;
+		aoy = poy + 25;
+	} if(z/*player one facing*/=='up'){
+		aox = pox + 25;
+		aoy = poy;
+	} if(z/*player one facing*/=='down'){
+		aox = pox + 25;
+		aoy = poy + 50;
+	}
+	
+	if(az/*player one facing*/=='right'){
+		box = ptx + 50;
+		boy = pty + 25;
+	} if(az/*player one facing*/=='left'){
+		box = ptx;
+		boy = pty + 25;
+	} if(az/*player one facing*/=='up'){
+		box = ptx + 25;
+		boy = pty;
+	} if(az/*player one facing*/=='down'){
+		box = ptx + 25;
+		boy = pty + 50;
+	
+	}
+	drawArrow(pox+25,poy+25,aox,aoy);
+	drawArrow(ptx+25,pty+25,box,boy);
+	//draws shots
+	if(a==1){
+		posx = posx + ax;
+		posy = posy + ay;
+		if(posx<=0){
+			ax = -ax;
+		} if(posy<=0){
+			ay = -ay;
+		} if(posx>=800){
+			ax = -ax;
+		} if(posy>=650){
+			ay = -ay;
+		} if(posy>801){
+			posy = 799
+		}
+		aa = aa + 1;
+		if(aa>=300){
+			a=0;
+			posx = 999;
+			posy = 999;
+		}
+		circle(posx,posy,10,'white');	
+	} if(b==1){
+		ptsx = ptsx + bx;
+		ptsy = ptsy + by;
+		if(ptsx<=0){
+			bx = -bx;
+		} if(ptsy<=0){
+			by = -by;
+		} if(ptsx>=800){
+			bx = -bx;
+		} if(ptsy>=650){
+			by = -by;
+		} if(ptsy>801){
+			ptsy = 799
+		}
+		bb = bb + 1;
+		if(bb>=300){
+			b=0;
+			ptsx = 999;
+			ptsy = 999;
+		}
+		circle(ptsx,ptsy,10,'white');		
+	}
+	if(posx<=pox+25){
+		if(posx>=pox){
+			if(posy<=poy+25){
+				if(posy>=poy){
+					dead('one');
+				}
+			}
+		}
+	} 
+	if(posx<=ptx+25){
+		if(posx>=ptx){
+			if(posy<=pty+25){
+				if(posy>=pty){
+					dead('two');
+				}
+			}
+		}
+	} 
+	if(ptsx<=pox+25){
+		if(ptsx>=pox){
+			if(ptsy<=poy+25){
+				if(ptsy>=poy){
+					dead('one');
+				}
+			}
+		}
+	} 
+	if(ptsx<=ptx+25){
+		if(ptsx>=ptx){
+			if(ptsy<=pty+25){
+				if(ptsy>=pty){
+					dead('two');
+				}
+			}
+		}
+	} 
+}
+function shoot(player,speed,facing){
+	if(player=='one'){
+		a = 1;
+		aa = 0;
+		facing;
+		ax = 15;
+		ay = 15;
+		if(facing=='down'){
+			posx=pox;
+			posy=poy+50;
+			ax = 4;
+		} if(facing=='up'){
+			posx = pox;
+			posy = poy-50;
+			ax = 4;
+			ay = -ay;
+		} if(facing=='left'){
+			posx = pox-50;
+			posy = poy;
+			ax = -ax;
+			ay = 4;
+		} if(facing=='right'){
+			posx = pox + 50;
+			posy = poy;
+			ay = 4;
+		}
+		
+	}else{
+		b = 1;
+		bx = 10;
+		by = 10;
+		bb = 0;
+		facing;
+		if(facing=='down'){
+			ptsx=ptx;
+			ptsy=pty+50;
+			bx = 4;
+		} if(facing=='up'){
+			ptsx = ptx;
+			ptsy = pty-50;
+			by = -by;
+			bx = 4;
+		} if(facing=='left'){
+			ptsx = ptx-50;
+			ptsy = pty;
+			bx = -bx;
+			by = 4;
+		} if(facing=='right'){
+			ptsx = ptx + 50;
+			ptsy = pty;
+			by = 4;
+		}
+	}
+}
+function move(player,deltax,deltay){ //delta = change in
+	console.log(pox,poy,ptx,pty)
+	if(player=="one"){
+		pox = pox + deltax
+		poy = poy + deltay
+	}else if(player=='two'){
+		ptx = ptx + deltax
+		pty = pty + deltay
+	}
+	console.log(pox,poy,ptx,pty)
+}
+</script>
+</span>
+<div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Default ads -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3519931868243165"
+     data-ad-slot="1147744936"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div width='420' height='500'>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-3519931868243165",
+    enable_page_level_ads: true
+  });
+</script>
+</div>
+</body>
+</html>
